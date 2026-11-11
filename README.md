@@ -2,7 +2,7 @@
 
 A small, independent website for practicing vertical multiplication by hand. It keeps the creator's printed-school-worksheet direction: eight 3-digit × 2-digit problems, two columns and four rows on tablets, blank writing space, and answers for manual self-checking.
 
-**Release candidate 0.1.0.** Publication was approved on November 11, 2026. The independent public repository is `julian-amaro/multiplication-worksheet`; the initial GitHub Pages deployment is being prepared. Physical iPad Safari and Apple Pencil acceptance testing remains outstanding.
+**Release candidate 0.1.0.** Publication was approved on November 11, 2026. The independent public repository is `julian-amaro/multiplication-worksheet`; the GitHub Pages deployment is live at [Open the worksheet](https://julian-amaro.github.io/multiplication-worksheet/). Physical iPad Safari and Apple Pencil acceptance testing remains outstanding.
 
 ## Use
 
@@ -30,7 +30,7 @@ Open `http://localhost:3000`. The deployable website is the complete `public/` d
 - `reference/original-prototype.html`: unmodified source preserved for provenance.
 - `tests/`: state and event-handler regression tests; a manual responsive fixture.
 - `docs/TEST_REPORT.md`: observed checks and hardware testing limits.
-- `docs/DEPLOYMENT.md`: proposed independent GitHub repository and publishing steps.
+- `docs/DEPLOYMENT.md`: independent GitHub repository and publishing steps.
 - `.github/workflows/`: CI verification and manual-only Pages publication.
 
 No open-source license is assigned in this candidate. The creator retains that decision. Publishing source is a separate approval from granting an open-source license.
