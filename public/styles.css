@@ -1,0 +1,126 @@
+
+    :root { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; color: #242522; background: #f2f1ec; }
+    * {box-sizing:border-box}
+    body {margin:0; min-width:320px; }
+    button,input {font:inherit}
+    button {cursor:pointer; -webkit-tap-highlight-color: transparent}
+    button:focus-visible {outline:3px solid #5186e1; outline-offset:2px}
+    .appbar {position:sticky; top:0; z-index:10; background:#f2f1ecf5; backdrop-filter:blur(14px); border-bottom:1px solid #dcd9d0}
+    .appbar-inner {max-width:1020px; margin:0 auto; padding:12px clamp(12px,3vw,28px); display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap}
+    .brand {display:flex; flex-direction:column; gap:2px}
+    .brand strong {font-size:16px; letter-spacing:-.3px}
+    .brand span {font-size:12px;color:#686961}
+    .toolbar {display:flex; flex-wrap:wrap; gap:7px; align-items:center}
+    .btn {min-height:40px; border:1px solid #cfcfc8; padding:8px 12px; border-radius:11px; background:#fff; color:#2f302d; font-size:14px; font-weight:600; display:inline-flex; align-items:center; justify-content:center; gap:5px}
+    .btn.primary {background:#234f9c; border-color:#234f9c; color:white}
+    .btn.active {background:#e2eafe; color:#1d4887; border-color:#7098d4}
+    .btn:hover {filter:brightness(.975)}
+    .content {margin:0 auto; max-width:1035px; padding:15px clamp(9px,3vw,22px) 55px}
+    .tip {font-size:13px;color:#62645e; margin:0 0 12px; line-height:1.5}
+    .sheet {width:100%; background:#fffefa; border:1px solid #e9e5dc; box-shadow:0 10px 28px #524e3c16, 0 2px 7px #524e3c0a; border-radius:4px; padding:clamp(15px,3.9vw,42px); overflow:hidden}
+    .sheethead {display:flex; gap:12px; flex-direction:column; border-bottom:1px solid #d7d7d1; padding-bottom:18px}
+    .sheethead h1 {margin:0; text-align:center; font-family:Georgia, 'Times New Roman', serif; font-size:clamp(21px,3vw,30px);font-weight:700;color:#292a27}
+    .ident {display:flex; justify-content:space-between; gap:12px; font-family:Georgia, serif; font-size:clamp(12px,1.7vw,16px)}
+    .ident label {display:flex; gap:5px; align-items:center; flex:1}
+    .ident label:last-child {flex:0 0 32%}
+    .ident input {flex:1; min-width:0; border:0; border-bottom:1px solid #8b8b81; background:transparent; outline:none; font-family:Georgia,serif; font-size:16px; padding:5px 4px; border-radius:0}
+    .instructions {font-family:Georgia, serif; font-size:clamp(12px,1.65vw,15px);color:#5c5e5b;margin:16px 0 6px}
+    .problem-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:clamp(9px,3vw,34px); row-gap:18px}
+    .problem {position:relative; aspect-ratio: 5/3; min-width:0; border-bottom:1px solid #ecebe5; isolation:isolate}
+    .number {position:absolute;top:10px;left:6px;font-family:Georgia,serif;font-size:clamp(12px,1.8vw,17px); color:#4e514d}
+    .formula {position:absolute; top:18px; right:18%; display:flex; flex-direction:column; align-items:flex-end; color:#191b1b; line-height:1.06; font-family:Georgia,serif; font-size:clamp(23px,3.5vw,33px); font-variant-numeric:tabular-nums}
+    .formula .bottom {display:flex;gap:9px}
+    .formula .rule {width:100%;min-width:75px;border-top:2px solid #343633;margin-top:6px}
+    .draw-canvas {position:absolute; inset:0; height:100%; width:100%; touch-action:none; user-select:none; -webkit-user-select:none; cursor:crosshair; z-index:2}
+    .expand {position:absolute;z-index:3;top:6px;right:4px; font-size:12px; border:1px solid #b9c7df; background:#f2f6ff; color:#264a7b; padding:7px 8px; border-radius:7px; min-height:32px; box-shadow:0 1px 2px #0000000d}
+    .answer {position:absolute;right:8px;bottom:8px;z-index:1; font-family:Georgia,serif; color:#286144; font-weight:700; font-size:clamp(14px,2vw,20px); background:#e9f5eb; border-radius:6px; padding:5px 7px; border:1px solid #cae4d2}
+    .answer[hidden] {display:none}
+    .sheetfoot {padding-top:17px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#797a74;font-family:Georgia,serif}
+    .modal {position:fixed; inset:0; z-index:25; background:#222b35b9; display:none; align-items:center; justify-content:center; padding:clamp(8px,3vw,30px)}
+    .modal.open {display:flex}
+    .zoom-card {width:min(96vw,960px); max-height:95dvh; display:flex; flex-direction:column; background:#fffefa; padding:clamp(12px,2.5vw,26px); border-radius:16px; box-shadow:0 18px 65px #11111155; overflow:auto; overscroll-behavior:contain}
+    .zoom-head {display:flex;justify-content:space-between;align-items:center; gap:10px;margin-bottom:9px}
+    .zoom-head h2 {font-size:19px; margin:0}
+    .zoom-help {font-size:13px; color:#666b69; margin-bottom:10px}
+    .zoom-workspace {width:100%;position:relative;aspect-ratio:5/3; background:#fff; border:1px solid #e4e5df; border-radius:5px; flex:0 0 auto}
+    .zoom-workspace .formula {font-size:clamp(30px,6vw,54px); top:8%; right:18%}
+    .zoom-workspace .number {font-size:21px;left:18px;top:14px}
+    .zoom-workspace .answer {font-size:24px;right:15px;bottom:13px}
+    .zoom-tools {display:flex;flex-wrap:wrap;gap:8px; margin-top:12px; justify-content:space-between}
+    .zoom-tools .left {display:flex;gap:8px;flex-wrap:wrap}
+    .notice {font-size:12px;color:#666a64;text-align:center;margin:14px auto 0;line-height:1.5}
+    .sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:575px) {
+      .appbar-inner {align-items:stretch}
+      .brand {width:100%;gap:0}
+      .toolbar {display:grid;grid-template-columns:repeat(4,minmax(0,1fr)); width:100%;}
+      .toolbar .btn {font-size:12px;padding:8px 3px;min-height:38px}
+      .toolbar .new-btn,.toolbar .answer-btn{grid-column:span 2}
+      .problem-grid {grid-template-columns:1fr;}
+      .problem {aspect-ratio: 5/2.7}
+      .formula {font-size:34px}
+      .sheet {padding:15px}
+      .tip {font-size:12px}
+      .zoom-card {width:100%;}
+      .zoom-workspace {aspect-ratio: 5/4}
+      .zoom-workspace .formula {font-size:33px}
+    }
+    @media print {
+      @page{size:letter; margin:.4in}
+      body {background:white}
+      .appbar,.tip,.notice,.expand,.zoom-tools {display:none!important}
+      .content {padding:0;max-width:none}
+      .sheet {border:none;box-shadow:none;padding:0}
+      .problem-grid {row-gap:5px;column-gap:18px}
+      .problem {aspect-ratio: 5/3; break-inside:avoid}
+      .sheethead h1 {font-size:22px}
+      .formula {font-size:25px}
+      .sheetfoot {padding-top:6px}
+      .modal {display:none!important}
+    }
+  
+/* Both views share one coordinate plane: equations and ink scale together. */
+.problem, .zoom-workspace { aspect-ratio: 5/4; }
+.problem { border:0; }
+.equation { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.equation text { font-family:Georgia,'Times New Roman',serif; fill:#191b1b; }
+.expand { min-width:84px; min-height:44px; top:0; left:40px; right:auto; }
+.btn { min-height:44px; }
+.btn:disabled { opacity:.45; cursor:default; }
+.draw-canvas { -webkit-touch-callout:none; }
+body.move-mode .draw-canvas { touch-action:auto; cursor:grab; }
+.answer { z-index:4; pointer-events:none; font-size:16px; }
+.save-status { font-size:13px; text-align:center; color:#46634e; min-height:20px; margin:18px 0 0; }
+.save-status.warning { color:#8c3b17; }
+.ident input:focus-visible { outline:2px solid #5186e1; outline-offset:2px; }
+.zoom-card { max-height:calc(100dvh - 24px); padding:16px; }
+.zoom-head { flex-shrink:0; }
+.zoom-head h2 { font-size:17px; }
+.zoom-workspace { width:min(100%,calc((100dvh - 235px)*1.25)); margin:0 auto; }
+.zoom-tools { justify-content:flex-start; flex-shrink:0; }
+.zoom-help { flex-shrink:0; }
+.zoom-workspace .answer { font-size:16px; }
+.appbar-inner { padding-left:max(12px,env(safe-area-inset-left)); padding-right:max(12px,env(safe-area-inset-right)); }
+@media(max-width:575px) {
+  .appbar { position:relative; }
+  .toolbar { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .toolbar .btn { min-height:44px; font-size:13px; }
+  .toolbar .answer-btn { grid-column:span 1; }
+  .toolbar .new-btn { grid-column:span 3; }
+  .ident { flex-wrap:wrap; }
+  .ident label, .ident label:last-child { flex:1 1 100%; }
+  .zoom-card { padding:10px; }
+  .zoom-workspace { width:100%; }
+  .zoom-tools .btn { font-size:12px; padding:7px; }
+}
+@media(max-height:500px) { .zoom-workspace { width:min(100%,450px); } }
+@media print {
+  .save-status { display:none; }
+  .problem-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 18px; }
+  .problem { aspect-ratio:5/4; }
+  .sheet { width:520px; max-width:100%; margin:auto; }
+  .equation, .draw-canvas { height:100%; }
+  .sheethead { padding-bottom:8px; }
+  .instructions { margin:8px 0; }
+  .answer { font-size:12px; }
+}

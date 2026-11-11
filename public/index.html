@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f2f1ec" />
+  <title>My Multiplication Worksheet</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="appbar">
+    <div class="appbar-inner">
+      <div class="brand"><strong>✎ My Multiplication Worksheet</strong><span>Write like paper · 8 problems</span></div>
+      <div class="toolbar" aria-label="Worksheet tools">
+        <button class="btn active pen-btn" id="penButton" type="button" aria-pressed="true">✏️ Pencil</button>
+        <button class="btn erase-btn" id="eraserButton" type="button" aria-pressed="false">◻ Eraser</button>
+        <button class="btn move-btn" id="moveButton" type="button" aria-pressed="false">Move page</button>
+        <button class="btn" id="undoButton" type="button">↶ Undo</button>
+        <button class="btn" id="clearButton" type="button">Clear ink</button>
+        <button class="btn answer-btn" id="answersButton" type="button" aria-pressed="false">Show Answers</button>
+        <button class="btn new-btn primary" id="newButton" type="button">New Worksheet</button>
+      </div>
+    </div>
+  </header>
+  <main class="content">
+    <noscript>This worksheet needs JavaScript enabled to display problems and handwriting tools.</noscript>
+    <p class="tip">Write with your finger or stylus. Tap <strong>Enlarge ↗</strong> for more room. To scroll or pinch to zoom, choose <strong>Move page</strong>, or scroll from the page margins.</p>
+    <section class="sheet" aria-label="Multiplication worksheet">
+      <div class="sheethead">
+        <h1>Multiplication Practice</h1>
+        <div class="ident"><label>Name (optional): <input id="studentName" type="text" aria-label="Student name" autocomplete="off" maxlength="100" /></label><label>Date: <input id="dateField" type="text" maxlength="40" aria-label="Date" /></label></div>
+      </div>
+      <p class="instructions">Multiply. Show your work in the space under each problem.</p>
+      <div id="problems" class="problem-grid"></div>
+      <div class="sheetfoot"><span>Practice makes progress.</span><span id="pageNumber">Worksheet 1</span></div>
+    </section>
+    <p id="saveStatus" class="save-status" role="status" aria-live="polite"></p>
+    <p class="notice">Work saves only in this browser on this device. Clearing browser data can remove it; private browsing may not keep it. Names and handwriting are never uploaded. Print from your browser to keep a copy.</p>
+  </main>
+  <div class="modal" id="zoomModal" role="dialog" aria-modal="true" aria-labelledby="zoomTitle">
+    <div class="zoom-card">
+      <div class="zoom-head"><h2 id="zoomTitle">Problem 1</h2><button type="button" id="closeZoom" class="btn primary">Done ✓</button></div>
+      <div class="zoom-help">Write larger here. Your writing will appear on the worksheet when you tap Done.</div>
+      <div id="zoomWorkspace" class="zoom-workspace"></div>
+      <div class="zoom-tools"><div class="left"><button class="btn pen-btn" id="zoomPen" type="button">✏️ Pencil</button><button class="btn erase-btn" id="zoomEraser" type="button">◻ Eraser</button><button class="btn move-btn" id="zoomMove" type="button">Move page</button><button class="btn" id="zoomUndo" type="button">↶ Undo</button><button class="btn" id="zoomClear" type="button">Clear ink</button></div><button class="btn answer-btn" id="zoomAnswers" type="button" aria-pressed="false">Show Answers</button><button class="btn primary" id="zoomDone" type="button">Back to Worksheet</button></div>
+    </div>
+  </div>
+<script src="./model.js" defer></script>
+<script src="./app.js" defer></script>
+</body>
+</html>
