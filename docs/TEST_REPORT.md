@@ -27,6 +27,10 @@ Remote desktop Chrome with mouse input, using the managed local preview:
 
 The fixture changes CSS viewport dimensions only. It does not emulate Safari, Apple Pencil, iPad hardware, or native touch gestures. Browser console inspection showed browser-extension metadata errors; those were not worksheet application errors.
 
+## Live deployment checks
+
+The public GitHub Pages site was verified in remote Chrome on November 11, 2026. Its relative assets loaded successfully. Drawing, enlarging a problem, returning, showing answers, and reloading retained the stroke and answer visibility. Undo then removed the disposable test stroke. GitHub Actions deployment run 43072730415 passed syntax verification and all 19 automated tests before publishing.
+
 ## Physical device acceptance still required
 
 On the creator's iPad in Safari, after the authorized HTTPS deployment:

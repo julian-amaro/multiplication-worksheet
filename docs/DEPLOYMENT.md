@@ -1,12 +1,12 @@
 # Deployment plan
 
-Status on November 11, 2026: the owner approved a public repository and GitHub Pages deployment. The independent public repository `julian-amaro/multiplication-worksheet` has been created; the first deployment is in preparation. No custom domain or paid resource has been created.
+Status on November 11, 2026: the owner approved a public repository and GitHub Pages deployment. The independent public repository `julian-amaro/multiplication-worksheet` has been created; the first deployment succeeded. Live website: https://julian-amaro.github.io/multiplication-worksheet/. No custom domain or paid resource has been created.
 
 ## Approved destination
 
 - Owner: `julian-amaro` (the connected GitHub account).
-- New repository: `multiplication-worksheet` (name availability to be checked at creation).
-- Recommended initial host: GitHub Pages, using only `public/`.
+- New repository: `multiplication-worksheet`.
+- Host: GitHub Pages, using only `public/`.
 - Recommended no-cost route: a public repository and public HTTPS website. This makes the application source code public. It does not publish browser-stored handwriting or names, which are not in the source.
 - No custom domain or paid plan. No existing repository or infrastructure will be reused.
 - No connection to Northline code, credentials, deployment projects, or domains.
@@ -30,9 +30,15 @@ Revert to the last verified commit, rerun verification, then manually publish it
 
 ## Current publishing access
 
-Repository creation used the authenticated GitHub website. Source upload uses the connected GitHub tools. Pages setup uses GitHub settings. No unrelated repository or credentials are used.
+Repository creation used the authenticated GitHub website. Source upload used the authenticated GitHub website because connector writes were unavailable for the new repository. Pages setup uses GitHub settings. No unrelated repository or credentials are used.
 
 ## References checked November 11, 2026
 
 - https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
 - https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+
+## Initial publication evidence
+
+Manual deployment run 43072730415 completed successfully on November 11, 2026 from commit `d544f93fdfd0ddcc5c1ce2028a318c9544ebd256`. Syntax checks and all 19 tests passed before deployment. The live HTTPS website was opened in remote Chrome, and handwriting and answer visibility survived zoom/return and a page reload. No physical iPad or Apple Pencil test has been performed.
+
+Run: https://github.com/julian-amaro/multiplication-worksheet/actions/runs/43072730415
