@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f2f1ec" />
+  <title>My Multiplication Worksheet</title>
+  <style>
+    :root { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; color: #242522; background: #f2f1ec; }
+    * {box-sizing:border-box}
+    body {margin:0; min-width:320px; }
+    button,input {font:inherit}
+    button {cursor:pointer; -webkit-tap-highlight-color: transparent}
+    button:focus-visible {outline:3px solid #5186e1; outline-offset:2px}
+    .appbar {position:sticky; top:0; z-index:10; background:#f2f1ecf5; backdrop-filter:blur(14px); border-bottom:1px solid #dcd9d0}
+    .appbar-inner {max-width:1020px; margin:0 auto; padding:12px clamp(12px,3vw,28px); display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap}
+    .brand {display:flex; flex-direction:column; gap:2px}
+    .brand strong {font-size:16px; letter-spacing:-.3px}
+    .brand span {font-size:12px;color:#686961}
+    .toolbar {display:flex; flex-wrap:wrap; gap:7px; align-items:center}
+    .btn {min-height:40px; border:1px solid #cfcfc8; padding:8px 12px; border-radius:11px; background:#fff; color:#2f302d; font-size:14px; font-weight:600; display:inline-flex; align-items:center; justify-content:center; gap:5px}
+    .btn.primary {background:#234f9c; border-color:#234f9c; color:white}
+    .btn.active {background:#e2eafe; color:#1d4887; border-color:#7098d4}
+    .btn:hover {filter:brightness(.975)}
+    .content {margin:0 auto; max-width:1035px; padding:15px clamp(9px,3vw,22px) 55px}
+    .tip {font-size:13px;color:#62645e; margin:0 0 12px; line-height:1.5}
+    .sheet {width:100%; background:#fffefa; border:1px solid #e9e5dc; box-shadow:0 10px 28px #524e3c16, 0 2px 7px #524e3c0a; border-radius:4px; padding:clamp(15px,3.9vw,42px); overflow:hidden}
+    .sheethead {display:flex; gap:12px; flex-direction:column; border-bottom:1px solid #d7d7d1; padding-bottom:18px}
+    .sheethead h1 {margin:0; text-align:center; font-family:Georgia, 'Times New Roman', serif; font-size:clamp(21px,3vw,30px);font-weight:700;color:#292a27}
+    .ident {display:flex; justify-content:space-between; gap:12px; font-family:Georgia, serif; font-size:clamp(12px,1.7vw,16px)}
+    .ident label {display:flex; gap:5px; align-items:center; flex:1}
+    .ident label:last-child {flex:0 0 32%}
+    .ident input {flex:1; min-width:0; border:0; border-bottom:1px solid #8b8b81; background:transparent; outline:none; font-family:Georgia,serif; font-size:16px; padding:5px 4px; border-radius:0}
+    .instructions {font-family:Georgia, serif; font-size:clamp(12px,1.65vw,15px);color:#5c5e5b;margin:16px 0 6px}
+    .problem-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:clamp(9px,3vw,34px); row-gap:18px}
+    .problem {position:relative; aspect-ratio: 5/3; min-width:0; border-bottom:1px solid #ecebe5; isolation:isolate}
+    .number {position:absolute;top:10px;left:6px;font-family:Georgia,serif;font-size:clamp(12px,1.8vw,17px); color:#4e514d}
+    .formula {position:absolute; top:18px; right:18%; display:flex; flex-direction:column; align-items:flex-end; color:#191b1b; line-height:1.06; font-family:Georgia,serif; font-size:clamp(23px,3.5vw,33px); font-variant-numeric:tabular-nums}
+    .formula .bottom {display:flex;gap:9px}
+    .formula .rule {width:100%;min-width:75px;border-top:2px solid #343633;margin-top:6px}
+    .draw-canvas {position:absolute; inset:0; height:100%; width:100%; touch-action:none; user-select:none; -webkit-user-select:none; cursor:crosshair; z-index:2}
+    .expand {position:absolute;z-index:3;top:6px;right:4px; font-size:12px; border:1px solid #b9c7df; background:#f2f6ff; color:#264a7b; padding:7px 8px; border-radius:7px; min-height:32px; box-shadow:0 1px 2px #0000000d}
+    .answer {position:absolute;right:8px;bottom:8px;z-index:1; font-family:Georgia,serif; color:#286144; font-weight:700; font-size:clamp(14px,2vw,20px); background:#e9f5eb; border-radius:6px; padding:5px 7px; border:1px solid #cae4d2}
+    .answer[hidden] {display:none}
+    .sheetfoot {padding-top:17px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#797a74;font-family:Georgia,serif}
+    .modal {position:fixed; inset:0; z-index:25; background:#222b35b9; display:none; align-items:center; justify-content:center; padding:clamp(8px,3vw,30px)}
+    .modal.open {display:flex}
+    .zoom-card {width:min(96vw,960px); max-height:95dvh; display:flex; flex-direction:column; background:#fffefa; padding:clamp(12px,2.5vw,26px); border-radius:16px; box-shadow:0 18px 65px #11111155; overflow:auto; overscroll-behavior:contain}
+    .zoom-head {display:flex;justify-content:space-between;align-items:center; gap:10px;margin-bottom:9px}
+    .zoom-head h2 {font-size:19px; margin:0}
+    .zoom-help {font-size:13px; color:#666b69; margin-bottom:10px}
+    .zoom-workspace {width:100%;position:relative;aspect-ratio:5/3; background:#fff; border:1px solid #e4e5df; border-radius:5px; flex:0 0 auto}
+    .zoom-workspace .formula {font-size:clamp(30px,6vw,54px); top:8%; right:18%}
+    .zoom-workspace .number {font-size:21px;left:18px;top:14px}
+    .zoom-workspace .answer {font-size:24px;right:15px;bottom:13px}
+    .zoom-tools {display:flex;flex-wrap:wrap;gap:8px; margin-top:12px; justify-content:space-between}
+    .zoom-tools .left {display:flex;gap:8px;flex-wrap:wrap}
+    .notice {font-size:12px;color:#666a64;text-align:center;margin:14px auto 0;line-height:1.5}
+    .sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:575px) {
+      .appbar-inner {align-items:stretch}
+      .brand {width:100%;gap:0}
+      .toolbar {display:grid;grid-template-columns:repeat(4,minmax(0,1fr)); width:100%;}
+      .toolbar .btn {font-size:12px;padding:8px 3px;min-height:38px}
+      .toolbar .new-btn,.toolbar .answer-btn{grid-column:span 2}
+      .problem-grid {grid-template-columns:1fr;}
+      .problem {aspect-ratio: 5/2.7}
+      .formula {font-size:34px}
+      .sheet {padding:15px}
+      .tip {font-size:12px}
+      .zoom-card {width:100%;}
+      .zoom-workspace {aspect-ratio: 5/4}
+      .zoom-workspace .formula {font-size:33px}
+    }
+    @media print {
+      @page{size:letter; margin:.4in}
+      body {background:white}
+      .appbar,.tip,.notice,.expand,.zoom-tools {display:none!important}
+      .content {padding:0;max-width:none}
+      .sheet {border:none;box-shadow:none;padding:0}
+      .problem-grid {row-gap:5px;column-gap:18px}
+      .problem {aspect-ratio: 5/3; break-inside:avoid}
+      .sheethead h1 {font-size:22px}
+      .formula {font-size:25px}
+      .sheetfoot {padding-top:6px}
+      .modal {display:none!important}
+    }
+  </style>
+</head>
+<body>
+  <header class="appbar">
+    <div class="appbar-inner">
+      <div class="brand"><strong>✎ My Multiplication Worksheet</strong><span>Write like paper · 8 problems · iPad-friendly</span></div>
+      <div class="toolbar" aria-label="Worksheet tools">
+        <button class="btn active pen-btn" id="penButton" type="button" aria-pressed="true">✏️ Pencil</button>
+        <button class="btn erase-btn" id="eraserButton" type="button" aria-pressed="false">◻ Eraser</button>
+        <button class="btn" id="undoButton" type="button">↶ Undo</button>
+        <button class="btn" id="clearButton" type="button">Clear ink</button>
+        <button class="btn answer-btn" id="answersButton" type="button" aria-pressed="false">Show Answers</button>
+        <button class="btn new-btn primary" id="newButton" type="button">New Worksheet</button>
+      </div>
+    </div>
+  </header>
+  <main class="content">
+    <p class="tip">Write directly on the page with your finger or stylus. Tap <strong>Enlarge ↗</strong> to give any problem more room. Your writing stays with it when you return.</p>
+    <section class="sheet" aria-label="Multiplication worksheet">
+      <div class="sheethead">
+        <h1>Multiplication Practice</h1>
+        <div class="ident"><label>Name: <input id="studentName" type="text" aria-label="Student name" autocomplete="off" /></label><label>Date: <input id="dateField" type="text" aria-label="Date" /></label></div>
+      </div>
+      <p class="instructions">Multiply. Show your work in the space under each problem.</p>
+      <div id="problems" class="problem-grid"></div>
+      <div class="sheetfoot"><span>Practice makes progress.</span><span id="pageNumber">Worksheet 1</span></div>
+    </section>
+    <p class="notice">Your handwriting is kept in this browser when possible. This prototype does not send writing or names anywhere. Use “New Worksheet” to generate eight new problems. Printing is available through your browser's Print command.</p>
+  </main>
+  <div class="modal" id="zoomModal" role="dialog" aria-modal="true" aria-labelledby="zoomTitle">
+    <div class="zoom-card">
+      <div class="zoom-head"><h2 id="zoomTitle">Problem 1</h2><button type="button" id="closeZoom" class="btn primary">Done ✓</button></div>
+      <div class="zoom-help">Write larger here. Your writing will appear on the worksheet when you tap Done.</div>
+      <div id="zoomWorkspace" class="zoom-workspace"></div>
+      <div class="zoom-tools"><div class="left"><button class="btn pen-btn" id="zoomPen" type="button">✏️ Pencil</button><button class="btn erase-btn" id="zoomEraser" type="button">◻ Eraser</button><button class="btn" id="zoomUndo" type="button">↶ Undo</button><button class="btn" id="zoomClear" type="button">Clear ink</button></div><button class="btn primary" id="zoomDone" type="button">Back to Worksheet</button></div>
+    </div>
+  </div>
+<script>
+(() => {
+  'use strict';
+  const W = 1000, H = 600;
+  const STORAGE = 'multiplication-worksheet-v1';
+  const state = { problems: [], strokes: Array.from({length:8}, () => []), showingAnswers:false, tool:'pen', zoomIndex:null, sheetNumber:1, studentName:'', date:new Date().toLocaleDateString('en-US') };
+  const root = document.getElementById('problems');
+  const zoomModal = document.getElementById('zoomModal');
+  const zoomWorkspace = document.getElementById('zoomWorkspace');
+  const rand = (min,max) => Math.floor(Math.random()*(max-min+1))+min;
+  function newProblems() { return Array.from({length:8}, () => ({a:rand(120,899),b:rand(12,79)})); }
+  function save() {
+    try { localStorage.setItem(STORAGE, JSON.stringify({problems:state.problems,strokes:state.strokes, showingAnswers:state.showingAnswers, sheetNumber:state.sheetNumber, studentName:state.studentName, date:state.date})); } catch(err) { /* Storage might be restricted for local files. */ }
+  }
+  function load() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STORAGE) || 'null');
+      if (!data || !Array.isArray(data.problems) || data.problems.length !== 8 || !Array.isArray(data.strokes) || data.strokes.length !== 8) return false;
+      state.problems = data.problems;
+      state.strokes = data.strokes;
+      state.showingAnswers = Boolean(data.showingAnswers);
+      state.sheetNumber = Number(data.sheetNumber) || 1;
+      state.studentName = data.studentName || '';
+      state.date = data.date || state.date;
+      return true;
+    } catch(err){return false;}
+  }
+  if (!load()) state.problems = [{a:125,b:24},{a:346,b:17},{a:208,b:36},{a:472,b:25},{a:628,b:43},{a:519,b:28},{a:735,b:46},{a:384,b:59}];
+  const escaped = x => String(x).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  function formulaHtml(p,i) {
+    return `<span class="number">${i+1}.</span><div class="formula" aria-hidden="true"><span>${escaped(p.a)}</span><span class="bottom"><span>×</span><span>${escaped(p.b)}</span></span><span class="rule"></span></div><span class="answer" ${state.showingAnswers?'':'hidden'}>Answer: ${escaped(p.a*p.b)}</span>`;
+  }
+  function renderSheet(){
+    root.replaceChildren();
+    state.problems.forEach((p,i)=>{
+      const el = document.createElement('article');
+      el.className='problem';
+      el.setAttribute('aria-label',`Problem ${i+1}: ${p.a} times ${p.b}`);
+      el.innerHTML = formulaHtml(p,i)+`<canvas class="draw-canvas" width="${W}" height="${H}" aria-label="Write on problem ${i+1} with stylus or finger"></canvas><button class="expand" type="button" aria-label="Enlarge problem ${i+1}">Enlarge ↗</button>`;
+      const canvas=el.querySelector('canvas');
+      bindCanvas(canvas,i);
+      el.querySelector('.expand').addEventListener('click',()=>openZoom(i));
+      root.appendChild(el);
+      paintCanvas(canvas,i);
+    });
+    document.getElementById('pageNumber').textContent=`Worksheet ${state.sheetNumber}`;
+    document.getElementById('studentName').value=state.studentName;
+    document.getElementById('dateField').value=state.date;
+    refreshControls();
+  }
+  function pointAt(canvas,evt) {
+    const box=canvas.getBoundingClientRect();
+    return {x:Math.max(0,Math.min(1,(evt.clientX-box.left)/box.width)), y:Math.max(0,Math.min(1,(evt.clientY-box.top)/box.height))};
+  }
+  function paintCanvas(canvas,idx) {
+    const context=canvas.getContext('2d');
+    context.clearRect(0,0,W,H);
+    context.lineCap='round'; context.lineJoin='round';
+    for(const stroke of state.strokes[idx]) {
+      if(!Array.isArray(stroke.points) || !stroke.points.length) continue;
+      context.globalCompositeOperation = stroke.tool==='eraser' ? 'destination-out' : 'source-over';
+      context.strokeStyle=stroke.tool==='eraser' ? '#000' : '#245eab';
+      context.fillStyle=context.strokeStyle;
+      context.lineWidth=stroke.tool==='eraser' ? 35 : 5;
+      context.beginPath();
+      const pts=stroke.points;
+      if(pts.length===1){context.arc(pts[0].x*W,pts[0].y*H,context.lineWidth/2,0,2*Math.PI);context.fill();}
+      else {context.moveTo(pts[0].x*W,pts[0].y*H);pts.slice(1).forEach(pt=>context.lineTo(pt.x*W,pt.y*H));context.stroke();}
+    }
+    context.globalCompositeOperation='source-over';
+  }
+  function refreshAllCanvas(idx) {
+    document.querySelectorAll('.problem').forEach((el,n)=>{if(idx===undefined || idx===n) paintCanvas(el.querySelector('canvas'),n)});
+    const zoomCanvas=zoomWorkspace.querySelector('canvas');
+    if(zoomCanvas && state.zoomIndex!==null && (idx===undefined || idx===state.zoomIndex)) paintCanvas(zoomCanvas,state.zoomIndex);
+  }
+  function bindCanvas(canvas,idx) {
+    let activeStroke=null;
+    canvas.addEventListener('pointerdown',evt=>{
+      if(evt.button !== 0 && evt.pointerType==='mouse') return;
+      evt.preventDefault();
+      const stroke={tool:state.tool,points:[pointAt(canvas,evt)]};
+      state.strokes[idx].push(stroke); activeStroke=stroke;
+      canvas.setPointerCapture(evt.pointerId);
+      paintCanvas(canvas,idx);
+    });
+    canvas.addEventListener('pointermove',evt=>{
+      if(!activeStroke)return;
+      evt.preventDefault();
+      activeStroke.points.push(pointAt(canvas,evt));
+      paintCanvas(canvas,idx);
+    });
+    function finish() { if(!activeStroke)return; activeStroke=null; save(); refreshAllCanvas(idx); }
+    canvas.addEventListener('pointerup',finish);
+    canvas.addEventListener('pointercancel',finish);
+    canvas.addEventListener('lostpointercapture',finish);
+  }
+  function refreshControls() {
+    document.querySelectorAll('.pen-btn').forEach(b=>{b.classList.toggle('active',state.tool==='pen');b.setAttribute('aria-pressed',state.tool==='pen')});
+    document.querySelectorAll('.erase-btn').forEach(b=>{b.classList.toggle('active',state.tool==='eraser');b.setAttribute('aria-pressed',state.tool==='eraser')});
+    const answerButton=document.getElementById('answersButton');
+    answerButton.textContent=state.showingAnswers?'Hide Answers':'Show Answers';
+    answerButton.setAttribute('aria-pressed',state.showingAnswers);
+  }
+  function setTool(tool) {state.tool=tool;refreshControls();}
+  document.querySelectorAll('.pen-btn').forEach(b=>b.addEventListener('click',()=>setTool('pen')));
+  document.querySelectorAll('.erase-btn').forEach(b=>b.addEventListener('click',()=>setTool('eraser')));
+  function editingIndex(){return state.zoomIndex;}
+  function lastWrittenIndex(){for(let i=7;i>=0;i--)if(state.strokes[i].length)return i;return -1;}
+  function undo() {const idx=editingIndex() ?? lastWrittenIndex(); if(idx<0)return;state.strokes[idx].pop();refreshAllCanvas(idx);save();}
+  function clearInk() {
+    const idx=editingIndex();
+    if(idx!==null){state.strokes[idx]=[];refreshAllCanvas(idx);save();return;}
+    if(state.strokes.some(s=>s.length) && !confirm('Erase all handwriting on this worksheet?'))return;
+    state.strokes=Array.from({length:8},()=>[]);refreshAllCanvas();save();
+  }
+  document.getElementById('undoButton').addEventListener('click',undo);
+  document.getElementById('zoomUndo').addEventListener('click',undo);
+  document.getElementById('clearButton').addEventListener('click',clearInk);
+  document.getElementById('zoomClear').addEventListener('click',clearInk);
+  document.getElementById('answersButton').addEventListener('click',()=>{
+    state.showingAnswers=!state.showingAnswers;
+    document.querySelectorAll('.problem').forEach((el,i)=>{el.querySelector('.answer').hidden=!state.showingAnswers});
+    if(state.zoomIndex!==null) zoomWorkspace.querySelector('.answer').hidden=!state.showingAnswers;
+    refreshControls();save();
+  });
+  document.getElementById('newButton').addEventListener('click',()=>{
+    if(state.strokes.some(s=>s.length) && !confirm('Create a new worksheet? This will replace the current handwriting.'))return;
+    state.problems=newProblems();state.strokes=Array.from({length:8},()=>[]);state.showingAnswers=false;state.sheetNumber++;save();renderSheet();window.scrollTo({top:0,behavior:'smooth'});
+  });
+  document.getElementById('studentName').addEventListener('input',evt=>{state.studentName=evt.target.value;save()});
+  document.getElementById('dateField').addEventListener('input',evt=>{state.date=evt.target.value;save()});
+  function openZoom(idx) {
+    state.zoomIndex=idx;
+    const p=state.problems[idx];
+    document.getElementById('zoomTitle').textContent=`Problem ${idx+1} · ${p.a} × ${p.b}`;
+    zoomWorkspace.innerHTML=formulaHtml(p,idx)+`<canvas class="draw-canvas" width="${W}" height="${H}" aria-label="Enlarged writing space for problem ${idx+1}"></canvas>`;
+    const canvas=zoomWorkspace.querySelector('canvas');
+    bindCanvas(canvas,idx);paintCanvas(canvas,idx);
+    zoomModal.classList.add('open');document.body.style.overflow='hidden';
+    document.getElementById('closeZoom').focus();refreshControls();
+  }
+  function closeZoom() {
+    if(state.zoomIndex===null)return;
+    const idx=state.zoomIndex;
+    state.zoomIndex=null;zoomModal.classList.remove('open');document.body.style.overflow='';
+    refreshAllCanvas(idx);save();
+    document.querySelectorAll('.problem')[idx].querySelector('.expand').focus();
+  }
+  document.getElementById('closeZoom').addEventListener('click',closeZoom);
+  document.getElementById('zoomDone').addEventListener('click',closeZoom);
+  document.addEventListener('keydown',evt=>{
+    if(evt.key==='Escape' && state.zoomIndex!==null)closeZoom();
+    if((evt.ctrlKey||evt.metaKey) && evt.key.toLowerCase()==='z' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) {evt.preventDefault();undo();}
+  });
+  renderSheet();
+})();
+</script>
+</body>
+</html>
