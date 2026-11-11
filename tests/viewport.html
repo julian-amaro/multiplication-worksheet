@@ -1,0 +1,5 @@
+<!doctype html><meta name="viewport" content="width=device-width"><title>Local responsive QA</title>
+<style>body{margin:0;background:#bbb;font:16px system-ui}nav{padding:8px;display:flex;gap:12px}button{padding:10px}iframe{border:0;display:block;margin:auto;background:white}</style>
+<nav><button onclick="size(768,1024)">Tablet portrait 768 × 1024</button><button onclick="size(1024,768)">Tablet landscape 1024 × 768</button><button onclick="size(390,844)">Phone 390 × 844</button><span id="size"></span></nav>
+<iframe title="Worksheet preview" src="../public/index.html" width="768" height="1024"></iframe>
+<script>function size(w,h){document.querySelector('iframe').width=w;document.querySelector('iframe').height=h;document.getElementById('size').textContent=w+' × '+h;}</script>
